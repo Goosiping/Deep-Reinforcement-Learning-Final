@@ -74,6 +74,13 @@ def WrapperHardAtari(env, height=96, width=96, frame_stacking=4, max_steps=4500)
 
     return env
 
+def WrapperAtari(env, height=96, width=96, frame_stacking=4, max_steps=4500):
+    env = RepeatActionEnv(env)
+    env = ResizeEnv(env, height, width, frame_stacking)
+    env = RawScoreEnv(env, max_steps)
+
+    return env
+
 class RawScoreEnv(gym.Wrapper):
     def __init__(self, env, max_steps):
         gym.Wrapper.__init__(self, env)
